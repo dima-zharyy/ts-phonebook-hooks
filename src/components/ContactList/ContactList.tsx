@@ -1,8 +1,13 @@
-import React from 'react';
-import { ContactListItem } from 'components';
-import PropTypes from 'prop-types';
+import React from "react";
+import { ContactListItem } from "components";
+import { IContactsState } from "hooks/useLocalStorage";
 
-export const ContactList = ({ contacts, onClick }) => {
+interface IListProps {
+  contacts: IContactsState;
+  onClick: (id: string) => void;
+}
+
+export const ContactList: React.FC<IListProps> = ({ contacts, onClick }) => {
   return (
     <ul>
       {contacts.map(({ id, name, number }) => {
@@ -17,15 +22,4 @@ export const ContactList = ({ contacts, onClick }) => {
       })}
     </ul>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
-  onClick: PropTypes.func.isRequired,
 };

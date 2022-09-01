@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { ContactForm, ContactList, Filter } from "components";
-import { useLocalStorage } from "hooks/useLocalStorage";
+import React, { useState } from "react";
+import { ContactForm, ContactList, Filter, SubmitData } from "components";
+import { IContactsState, useLocalStorage } from "hooks/useLocalStorage";
 
 import {
   AppContainer,
@@ -11,15 +11,15 @@ import {
 
 import { nanoid } from "nanoid";
 
-export const App = () => {
+export const App: React.FC = () => {
   const [contacts, setContacts] = useLocalStorage("contacts", []);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState<string>("");
 
-  const filteredContacts = contacts.filter(({ name }) =>
+  const filteredContacts: IContactsState = contacts.filter(({ name }) =>
     name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
   );
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: SubmitData) => {
     const isAlreadyInContacts = contacts.some(
       ({ name }) => name.toLocaleLowerCase() === data.name.toLocaleLowerCase()
     );
@@ -34,11 +34,11 @@ export const App = () => {
     setContacts((state) => [...state, newContact]);
   };
 
-  const handleFilterChange = (event) => {
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(event.target.value.toLowerCase());
   };
 
-  const handleClickDel = (id) => {
+  const handleClickDel = (id: string) => {
     setContacts(contacts.filter((contact) => contact.id !== id));
   };
 

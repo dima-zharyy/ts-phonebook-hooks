@@ -1,8 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-export const useLocalStorage = (key, defaultValue) => {
-  const [state, setState] = useState(() => {
-    return JSON.parse(window.localStorage.getItem(key)) ?? defaultValue;
+export type IContactsState =
+  | {
+      id: string;
+      name: string;
+      number: string;
+    }[]
+  | [];
+
+export const useLocalStorage = (
+  key: string,
+  defaultValue: IContactsState
+): [IContactsState, React.Dispatch<React.SetStateAction<IContactsState>>] => {
+  const [state, setState] = useState<IContactsState>(() => {
+    const savedContacts = window.localStorage.getItem("contacts");
+    return typeof savedContacts === "string"
+      ? JSON.parse(savedContacts)
+      : defaultValue;
   });
 
   useEffect(() => {

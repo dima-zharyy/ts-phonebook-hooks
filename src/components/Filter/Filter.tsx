@@ -1,9 +1,13 @@
-import React from 'react';
-import { FilterLabel, FilterInput, FilterWrapper } from './Filter.styled';
-import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
+import React from "react";
+import { FilterLabel, FilterInput, FilterWrapper } from "./Filter.styled";
+import { nanoid } from "nanoid";
 
-export const Filter = ({ onChange, value }) => {
+export interface IFilterProps {
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+}
+
+export const Filter: React.FC<IFilterProps> = ({ onChange, value }) => {
   const filterId = nanoid(5);
   return (
     <FilterWrapper>
@@ -16,9 +20,4 @@ export const Filter = ({ onChange, value }) => {
       />
     </FilterWrapper>
   );
-};
-
-Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
 };

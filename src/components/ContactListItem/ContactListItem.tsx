@@ -1,15 +1,25 @@
-import React from 'react';
+import React from "react";
 
 import {
   ContactItem,
   ContactTextWrapper,
   ContactName,
   Button,
-} from './ContactListItem.styled';
+} from "./ContactListItem.styled";
 
-import PropTypes from 'prop-types';
+type ClickHandler = React.MouseEventHandler<HTMLButtonElement>;
 
-export const ContactListItem = ({ name, number, onClick }) => {
+export interface IItemProps {
+  onClick: ClickHandler;
+  name: string;
+  number: string;
+}
+
+export const ContactListItem: React.FC<IItemProps> = ({
+  name,
+  number,
+  onClick,
+}) => {
   return (
     <ContactItem>
       <ContactTextWrapper>
@@ -20,10 +30,4 @@ export const ContactListItem = ({ name, number, onClick }) => {
       </Button>
     </ContactItem>
   );
-};
-
-ContactListItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
 };

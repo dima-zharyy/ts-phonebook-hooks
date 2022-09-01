@@ -1,39 +1,46 @@
-import { useState } from 'react';
+import React, { useState } from "react";
 import {
   Form,
   InnerFormContainer,
   FormLabel,
   FormInput,
   Button,
-} from './ContactForm.styled';
+} from "./ContactForm.styled";
 
-import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
 
-export const ContactForm = ({ onSubmit }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+export type SubmitData = { name: string; number: string };
+
+export type PropOnSubmit = {
+  onSubmit: (data: SubmitData) => void;
+};
+
+export const ContactForm: React.FC<PropOnSubmit> = ({ onSubmit }) => {
+  const [name, setName] = useState<string>("");
+  const [number, setNumber] = useState<string>("");
   const inputNameId = nanoid(5);
   const inputNumberId = nanoid(5);
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     onSubmit({ name, number });
 
-    setName('');
-    setNumber('');
+    setName("");
+    setNumber("");
   };
 
-  const handleInputChange = event => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const { name, value } = event.target;
 
     switch (name) {
-      case 'name':
+      case "name":
         setName(value);
         break;
 
-      case 'number':
+      case "number":
         setNumber(value);
         break;
 
@@ -73,8 +80,4 @@ export const ContactForm = ({ onSubmit }) => {
       <Button type="submit">Add contact</Button>
     </Form>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
